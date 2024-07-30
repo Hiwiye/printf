@@ -28,6 +28,8 @@ int _printf(const char *format, ...)
 			else if (*format == 's')
 			{
 				str = va_arg(args, char *);
+				if (str == NULL)
+					str = "(null)";
 				while (*str)
 					count += write(1, str++, 1);
 			}
