@@ -27,6 +27,33 @@ int print_number(int n)
 }
 
 /**
+ * print_binary - prints an unsigned int in binary
+ * @n: unsigned int to be printed
+ *
+ * Return: the number of characters printed
+ */
+int print_binary(unsigned int n)
+{
+	int count = 0;
+	char buffer[32];
+	int i = 0;
+
+	if (n == 0)
+	{
+		count += write(1, "0", 1);
+		return (count);
+	}
+	while (n > 0)
+	{
+		buffer[i++] = (n % 2) + '0';
+		n /= 2;
+	}
+	while (--i >= 0)
+		count += write(1, &buffer[i], 1);
+	return (count);
+}
+
+/**
  * handle_specifier - handles format specifiers
  * @format: format specifier character
  * @args: argument list
@@ -54,6 +81,10 @@ int handle_specifier(char format, va_list args)
 	else if (format == 'd' || format == 'i')
 	{
 		count += print_number(va_arg(args, int));
+	}
+	else if (format == 'b')
+	{
+		count += print_binary(va_arg(args, unsigned int));
 	}
 	else if (format == '%')
 	{
